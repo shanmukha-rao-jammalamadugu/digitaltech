@@ -10,7 +10,6 @@ def get_time_stories():
     html_content = response.read().decode('utf-8')
     conn.close()
 
-    # Extracting the latest 6 stories based on HTML structure
     stories = []
     start_marker = '<h3 class="latest-stories__item-headline">'
     end_marker = '</h3>'
@@ -19,7 +18,7 @@ def get_time_stories():
 
     index = 0
     while index < len(html_content) and len(stories) < 6:
-        # Extract title
+        
         title_start = html_content.find(start_marker, index)
         if title_start == -1:
             break
@@ -30,7 +29,7 @@ def get_time_stories():
 
         title = html_content[title_start + len(start_marker):title_end].strip()
 
-        # Extract link
+        
         link_start = html_content.find(link_start_marker, title_end)
         if link_start == -1:
             break
@@ -41,7 +40,7 @@ def get_time_stories():
 
         link = "https://" + host + html_content[link_start + len(link_start_marker):link_end].strip()
 
-        # Add to the stories list
+        
         stories.append({'title': title, 'link': link})
         index = link_end + len(link_end_marker)
 
